@@ -5,17 +5,17 @@
 clear
 import unicycle.*
 
-outfile = 'fault/mexico';
+outfile = 'fault/mexico_simplified';
 slabdepthfilename = 'fault/cam_slab2_dep_02.24.18-neglon.grd';
 % outlinefilename = 'slab2-outline-simplified.gmt';
 % asperitiesfilename = 'asperities_outline.gmt';
-outlinefilename = 'fault/mexico_outlines.csv';
+outlinefilename = 'fault/mexico_simplified_outlines.csv';
 
 % provide cutoff depth for fault mesh in km
 cutoff_depth = -155;
 
 % shift depth upwards uniformally to approximate a flat Earth
-zshift = 4;
+zshift = 3.9;
 
 % select a central point to convert from lat,lon -> xyz
 % normally this is a mean value of all the points we are meshing
@@ -38,8 +38,8 @@ pdegplot(g,"EdgeLabels","on","FaceLabels","on")
 axis tight equal
 
 %% create 2-d mesh using outline
-Hmax = 0.5;
-Hmin = 0.2;
+Hmax = 0.9;
+Hmin = 0.1;
 
 % construct mesh as a 2-d object
 modelmesh = createpde;
@@ -48,8 +48,8 @@ modelmesh = createpde;
 % gconcat = [g,g_asp];
 geometryFromEdges(modelmesh,g);
 
-meshobj = generateMesh(modelmesh,"Hmax",Hmax,"Hmin",Hmin,"Hgrad",1.2,...
-          "Hedge",{[41:42],0.05},"GeometricOrder","linear");
+meshobj = generateMesh(modelmesh,"Hmax",Hmax,"Hmin",Hmin,"Hgrad",1.1,...
+          "Hedge",{[41:48],0.1},"GeometricOrder","linear");
 
 % interpolate from slab2 onto mesh
 [longrid,latgrid] = meshgrid(lon,lat);
